@@ -1,0 +1,38 @@
+
+<div>
+  <button (click)="connect()" [disabled]="user_id">Conectar</button>
+  <button (click)="connectPro()" [disabled]="user_id" >Conectar Pro</button>
+  <button [hidden]="user" (click)="getUsers()">Lista usuarios</button>
+  <button (click)="createRoom()"  [disabled]="invitationRoom !== 'No hay sala' " >Crear sala</button>
+  <div *ngIf="!user">
+    <div *ngFor="let o of online">
+      <p>{{o.username}} <span><button (click)="invitePro(o.user_id)">Invitar</button></span></p>
+    </div>
+  </div>
+  <div *ngIf="user">
+    <div *ngFor="let o of onlinepro">
+      <p>{{o.username}} <span><button (click)="invitePro(o.user_id)" [disabled]="invitationRoom === 'No hay sala'">Invitar</button></span></p>
+    </div>
+  </div>
+  <p>{{invitationFrom}}</p>
+  <p>{{invitationRoom}}</p>
+  <button (click)="joinRoom()">Entrar</button>
+  <button (click)="leaveRoom()">Salir</button>
+  <hr>
+  <p>{{registration}} - {{user_id}}</p>
+  <p [hidden]="!canChat">Joined to {{invitationRoom}}</p>
+  <hr>
+    <p *ngFor="let u of usersInRoom">
+      {{u}}
+    </p>
+  <hr>
+  <input type="text" [(ngModel)]="message"/><button [disabled]="!canChat" (click)="send()">Enviar</button>
+  <div class="messages" *ngFor="let m of messages">
+    <div ngClass="{{m.class}}">
+      <div>
+        <p>{{m.from}}</p>
+        <p>{{m.message}}</p>
+      </div>
+    </div>
+  </div>
+</div>

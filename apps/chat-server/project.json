@@ -16,7 +16,8 @@
         "tsConfig": "apps/chat-server/tsconfig.app.json",
         "assets": ["apps/chat-server/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/chat-server/webpack.config.js"
+        "webpackConfig": "apps/chat-server/webpack.config.js",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},
@@ -58,6 +59,10 @@
           "codeCoverage": true
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/chat-server/Dockerfile . -t chat-server"
     }
   },
   "tags": []

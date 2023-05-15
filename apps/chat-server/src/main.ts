@@ -5,17 +5,47 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 import { AppModule } from './app/app.module';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+
+  /*
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: ['kafka-service:9092'],
+      },
+      consumer: {
+        groupId: 'chat-server',
+      },
+      producer: {
+        allowAutoTopicCreation: true,
+      }
+    },
+  });
+  */
+
+  app.useWebSocketAdapter(new IoAdapter(app));
+
+  app.enableCors({
+    origin: "*",
+    methods: "GET POST PUT PATCH DELETE"
+  })
+
   const port = process.env.PORT || 3000;
-  await app.listen(port);
+  const host = process.env.HOST || 'localhost';
+
+  //app.startAllMicroservices();
+
+  app.listen(`${host}:${port}`);
+
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://${host}:${port}`
   );
 }
 

@@ -1,0 +1,32 @@
+.messages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.user {
+  display: flex;
+  justify-content: flex-start;
+  border: 1px solid burlywood;
+  border-radius: 6px;
+  margin: 1rem;
+  grid-column: 0;
+  background-color: blanchedalmond;
+}
+
+.user>p {
+  margin-left: 2rem;
+}
+
+.invitee {
+  display: flex;
+  justify-content: flex-end;
+  border: 1px solid darkolivegreen;
+  border-radius: 6px;
+  margin: 1rem;
+  grid-column: 2;
+  background-color: darkseagreen;
+}
+
+.invitee>p {
+  margin-right: 2rem;
+}

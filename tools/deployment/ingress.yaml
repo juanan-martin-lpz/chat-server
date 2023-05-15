@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: chat-server
+  name: chat-server-ingress-service
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - backend:
+          service:
+            name: ws-server-service
+            port:
+              number: 30002
+        path: /chat/?(.*)
+        pathType: Prefix
